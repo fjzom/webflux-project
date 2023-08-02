@@ -2,6 +2,7 @@ package com.webflux.project.controllers;
 
 import com.webflux.project.models.Client;
 import com.webflux.project.repositories.ClientRepository;
+import com.webflux.project.services.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,30 +17,32 @@ public class ClientController {
 
     private final ClientRepository clientRepository;
 
+    private final ClientService clientService;
+
 
     @GetMapping
     public Flux<Client> getAllClients() {
-        return clientRepository.findAll();
+        return clientService.getClientFlux();
     }
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Client>> getClientById(@PathVariable Long id) {
         return clientRepository.findById(id)
-                .map(product -> ResponseEntity.ok(product))
+                .map(person -> ResponseEntity.ok(person))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Client> createClient(@RequestBody Client product) {
-        return clientRepository.save(product);
+    public Mono<Client> createClient(@RequestBody Client person) {
+        return clientRepository.save(person);
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Client>> updateClient(@PathVariable Long id, @RequestBody Client product) {
+    public Mono<ResponseEntity<Client>> updateClient(@PathVariable Long id, @RequestBody Client person) {
         return clientRepository.findById(id)
                 .flatMap(existingClient -> {
-                    existingClient.setName(product.getName());
+                    existingClient.setName(person.getName());
                     return clientRepository.save(existingClient);
                 })
                 .map(updatedClient -> ResponseEntity.ok(updatedClient))

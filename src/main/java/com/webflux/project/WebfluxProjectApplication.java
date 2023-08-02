@@ -15,7 +15,8 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 
 @EnableWebFlux
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.webflux.project.controllers","com.webflux.project.configurations", "com.webflux.project.repositories"})
+@ComponentScan(basePackages = {"com.webflux.project.controllers",
+        "com.webflux.project.services","org.springframework.web.reactive.function.client.*","com.webflux.project.configurations", "com.webflux.project.repositories"})
 
 public class WebfluxProjectApplication {
     public static void main(String[] args) {

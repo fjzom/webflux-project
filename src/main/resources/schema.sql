@@ -9,4 +9,9 @@ CREATE TABLE IF NOT EXISTS products (
 CREATE TABLE IF NOT EXISTS clients (
                                        id SERIAL PRIMARY KEY,
                                        name VARCHAR(255) NOT NULL
-    );
+);
+
+CREATE TABLE IF NOT EXISTS persons (
+                                       id SERIAL PRIMARY KEY,
+                                       name VARCHAR(255) NOT NULL
+);
